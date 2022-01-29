@@ -13,3 +13,17 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+if DEBUG:
+    MIDDLEWARE += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
+    INSTALLED_APPS += [
+        'debug_toolbar',
+    ]
+    INTERNAL_IPS = ['127.0.0.1', ]
+
+    # without this django debug toolbar not wroking
+    import mimetypes
+    mimetypes.add_type("application/javascript", ".js", True)
