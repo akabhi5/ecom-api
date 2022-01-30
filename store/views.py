@@ -2,6 +2,7 @@ from itertools import product
 from store.models import Category, Product
 from store import serializers
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 
 
 class ListProductAPIView(ListCreateAPIView):
@@ -10,6 +11,8 @@ class ListProductAPIView(ListCreateAPIView):
 
 
 class ProductAPIView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAdminUser]
+
     queryset = Product.objects.all()
     serializer_class = serializers.ProductSerializer
 
@@ -20,6 +23,8 @@ class ListCategoryAPIView(ListCreateAPIView):
 
 
 class CategoryAPIView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     queryset = Category.objects.all()
     serializer_class = serializers.CategorySerializer
 
